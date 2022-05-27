@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package packagemanagement;
+
+option java_multiple_files = true;
+option java_package = "pt.isep.tmdei.packagemanagement";
+
+message CreatePackageRequest {
+  int32 weight = 1;
+  int32 height = 2;
+  int32 width = 3;
+  string delivery = 4;
+}
+
+message CreatePackageResponse {
+  string package_id = 1;
+}
+
+message CreateTagForPackageRequest {
+  string package_id = 1;
+  string tag = 2;
+}
+
+message CreateTagForPackageResponse {
+  string tag_id = 1;
+  string tag = 2;
+}
+
+service PackageService {
+  rpc createPackage(CreatePackageRequest) returns (CreatePackageResponse);
+  rpc createTagForPackage(CreateTagForPackageRequest) returns (CreateTagForPackageResponse);
+}

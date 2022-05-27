@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package schedulerservice;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "pt.isep.tmdei.schedulerservice";
+
+message CreateDeliveryRequest {
+  string username = 1;
+  int64 pickup_latitude = 2;
+  int64 pickup_longitude = 3;
+  int64 dropOff_latitude = 4;
+  int64 dropOff_longitude = 5;
+  int32 weight = 6;
+  int32 height = 7;
+  int32 width = 8;
+}
+
+message CreateDeliveryResponse {
+  string username = 1;
+  string delivery = 2;
+  string package = 3;
+  string status = 4;
+  google.protobuf.Timestamp created = 5;
+  int64 drone = 6;
+  string transportation_request = 7;
+}
+
+message PickupPackageRequest {
+  string drone = 1;
+}
+
+message PickupPackageResponse {
+  string delivery = 1;
+  int64 pickup_latitude = 2;
+  int64 pickup_longitude = 3;
+  int64 dropOff_latitude = 4;
+  int64 dropOff_longitude = 5;
+  string status = 6;
+}
+
+message CompleteDeliveryRequest {
+  string delivery = 1;
+}
+
+message CompleteDeliveryResponse {
+  // empty
+}
+
+message CancelDeliveryRequest {
+  string delivery = 1;
+}
+
+message CancelDeliveryResponse {
+  // empty
+}
+
+message GetDeliveryEtaRequest {
+  string delivery = 1;
+}
+
+message GetDeliveryEtaResponse {
+  int32 minutes = 1;
+}
+
+service SchedulerService {
+  rpc scheduleDelivery(CreateDeliveryRequest) returns (CreateDeliveryResponse);
+  rpc pickupPackage(PickupPackageRequest) returns (PickupPackageResponse);
+  rpc completeDelivery(CompleteDeliveryRequest) returns (CompleteDeliveryResponse);
+  rpc cancelDelivery(CancelDeliveryRequest) returns (CancelDeliveryResponse);
+  rpc getDeliveryEta(GetDeliveryEtaRequest) returns (GetDeliveryEtaResponse);
+}

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package dronemanagement;
+
+option java_multiple_files = true;
+option java_package = "pt.isep.tmdei.dronemanagement";
+
+message BookDroneRequest {
+    // empty
+}
+  
+message BookDroneResponse {
+    int64 drone = 1;
+    string model = 2;
+}
+
+message IdleDroneRequest {
+    int64 drone = 1;
+}
+
+message IdleDroneResponse {
+    // empty
+}
+
+service DroneService {
+    rpc bookDrone(BookDroneRequest) returns (BookDroneResponse);
+    rpc idleDrone(IdleDroneRequest) returns (IdleDroneResponse);
+}

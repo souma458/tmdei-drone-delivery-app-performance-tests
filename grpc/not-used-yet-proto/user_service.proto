@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package usermanagement;
+
+option java_multiple_files = true;
+option java_package = "pt.isep.tmdei.usermanagement";
+
+message GetAccountRequest {
+    string username = 1;
+}
+  
+message GetAccountResponse {
+    string username = 1;
+    string status = 2;
+}
+
+service UserService {
+    rpc getUserAccount(GetAccountRequest) returns (GetAccountResponse);
+}

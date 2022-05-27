@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "pt.isep.tmdei.transportationservice";
+
+message CreateTransportationRequest {
+  string delivery = 1;
+}
+
+message CreateTransportationResponse {
+  string requestId = 1;
+  string status = 2;
+  google.protobuf.Timestamp requestDate = 3;
+}
+
+service ThirdPartyTransportationService {
+  rpc createTransportationRequest(CreateTransportationRequest) returns (CreateTransportationResponse);
+}
