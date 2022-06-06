@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package deliverymanagement;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "pt.isep.tmdei.deliverymanagement";
+
+message CreateDeliveryRequest {
+  string username = 1;
+  int64 pickup_latitude = 2;
+  int64 pickup_longitude = 3;
+  int64 dropOff_latitude = 4;
+  int64 dropOff_longitude = 5;
+}
+
+message CreateDeliveryResponse {
+  string username = 1;
+  string delivery = 2;
+  int64 pickup_latitude = 3;
+  int64 pickup_longitude = 4;
+  int64 dropOff_latitude = 5;
+  int64 dropOff_longitude = 6;
+  google.protobuf.Timestamp created = 7;
+  string status = 8;
+  bool expedited = 9;
+}
+
+message UpdateDeliveryStatusRequest {
+  string delivery = 1;
+  string status = 2;
+}
+
+message UpdateDeliveryStatusResponse {
+}
+
+message UpdateDeliveryDroneRequest {
+  string delivery = 1;
+  int64 drone = 2;
+}
+
+message UpdateDeliveryDroneResponse {
+}
+
+message PickupPackageRequest {
+  string drone = 1;
+}
+
+message PickupPackageResponse {
+  string delivery = 1;
+  int64 pickup_latitude = 2;
+  int64 pickup_longitude = 3;
+  int64 dropOff_latitude = 4;
+  int64 dropOff_longitude = 5;
+  string status = 6;
+}
+
+message CompleteDeliveryRequest {
+  string delivery = 1;
+}
+
+message CompleteDeliveryResponse {
+  // empty
+}
+
+message GetDeliveryRequest {
+  string delivery = 1;
+}
+
+message GetDeliveryResponse {
+  string delivery = 1;
+  bool expedited = 2;
+  int64 pickup_latitude = 3;
+  int64 pickup_longitude = 4;
+  int64 dropOff_latitude = 5;
+  int64 dropOff_longitude = 6;
+  string drone = 7;
+  string transportation_request = 8;
+  google.protobuf.Timestamp created = 9;
+  string account = 10;
+  string status = 11;  
+}
+
+message CancelDeliveryRequest {
+  string delivery = 1;
+}
+
+message CancelDeliveryResponse {
+  // empty
+}
+
+message ConfirmDeliveryRequest {
+  string delivery = 1;
+  string finger_print = 2;
+  string signature = 3;
+}
+
+message ConfirmDeliveryResponse {
+  string confirmation = 1;
+  string delivery = 2;
+  string finger_print = 3;
+  string signature = 4; 
+}
+
+message ListDeliveriesRequest {
+  string username = 1;
+}
+
+message ListDeliveriesResponse {
+  repeated GetDeliveryResponse deliveries = 1;
+}
+
+service DeliveryService {
+  rpc createDelivery(CreateDeliveryRequest) returns (CreateDeliveryResponse);
+  rpc updateDeliveryStatus(UpdateDeliveryStatusRequest) returns (UpdateDeliveryStatusResponse);
+  rpc updateDeliveryDrone(UpdateDeliveryDroneRequest) returns (UpdateDeliveryDroneResponse);
+  rpc pickupPackage(PickupPackageRequest) returns (PickupPackageResponse);
+  rpc completeDelivery(CompleteDeliveryRequest) returns (CompleteDeliveryResponse);
+  rpc getDelivery(GetDeliveryRequest) returns (GetDeliveryResponse);
+  rpc cancelDelivery(CancelDeliveryRequest) returns (CancelDeliveryResponse);
+  rpc confirmDelivery(ConfirmDeliveryRequest) returns (ConfirmDeliveryResponse);
+  rpc listDeliveries(ListDeliveriesRequest) returns (ListDeliveriesResponse);
+}
